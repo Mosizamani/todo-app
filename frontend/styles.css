@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    width: 100;
+    height: 50px;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    color: white;
+    background-color: purple;
+    border: none;
+    padding: 10px;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: purple;
+    font-weight: bold;
+}
+
+
+.completed {
+    text-decoration: line-through;
+    color: #ccc;
+}
+
+.container {
+    width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+}
+
+.todo-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#add-todo {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-todo input,
+#add-todo textarea,
+#add-todo button {
+    margin-bottom: 10px;
+}
