@@ -76,3 +76,4 @@ document.getElementById('add-todo').addEventListener('submit', async (event) => 
 // TODO: Implement editing title and details
 // TODO: Implement deleting todos
 // TODO: Implement completed todos
+
