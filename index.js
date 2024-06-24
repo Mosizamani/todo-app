@@ -19,10 +19,10 @@ app.get('/todos', async (req, res) => {
 
 app.put('/todos', async (req, res) => {
     if(!req.body.title) {
-        return res.status(400).send('Title field is required to create todo')
+        return res.status(400).json({ message:'Title field is required to create todo' })
     }
     if(!req.body.details) {
-        return res.status(400).send('Details field is required to create todo')
+        return res.status(400).json({ message:'Details field is required to create todo' })
     }
 
     const todo = await ToDo.create({
@@ -35,7 +35,7 @@ app.put('/todos', async (req, res) => {
 
 app.patch('/todos/:id', async (req, res) => {
     if (!req.params.id) {
-        return res.status(400).send('ID is required to update a todo')
+        return res.status(400).json({ message:'ID is required to update a todo'})
     }
 
     try {
@@ -50,12 +50,12 @@ app.patch('/todos/:id', async (req, res) => {
         const todo = await ToDo.findOne({ _id: req.params.id })
     
         if (!todo) {
-            return res.status(404).send('Todo not found')
+            return res.status(404).json({ message:'Todo not found' })
         }
     
         return res.status(200).json(todo)
     } catch (error) {
-        return res.status(400).send('Update todo failed (The length of the id written is not correct)')
+        return res.status(400).json({ message:'Update todo failed (The length of the id written is not correct)' })
     }
 
 })
@@ -75,5 +75,3 @@ const start = async () => {
 }
 
 start()
-
-
