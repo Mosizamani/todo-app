@@ -43,6 +43,10 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
+.todo-title {
+    font-weight: bold;
+}
+
 .todo-item {
     display: flex;
     align-items: center;
@@ -50,6 +54,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .todo-item input[type="checkbox"] {
     margin-right: 10px;
+}
+
+.todo-item button {
+    margin: 10px;
 }
 
 #add-todo {

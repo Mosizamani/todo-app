@@ -26,8 +26,13 @@ async function fetchTodos() {
                 item.appendChild(checkbox)
 
                 const text = document.createElement('p')
-                text.innerHTML = `<strong>${todo.title}</strong> - ${todo.details}`
+                text.innerHTML = `<span class="todo-title">${todo.title}</span> - <span class="todo-details">${todo.details}`
                 item.appendChild(text)
+
+                const button = document.createElement('button')
+                button.innerHTML = 'edit'
+                button.type = 'button'
+                item.appendChild(button)
 
                 todoItems.appendChild(item)
             })
@@ -48,8 +53,8 @@ addEventListener("DOMContentLoaded", async () => {
 document.getElementById('add-todo').addEventListener('submit', async (event) => {
     event.preventDefault()
 
-    const title = document.getElementById('todo-title')
-    const details = document.getElementById('todo-details')
+    const title = document.getElementById('todo-title-input')
+    const details = document.getElementById('todo-details-input')
 
     try {
         const response = await fetch(`${API_URL}/todos`, {
@@ -83,8 +88,12 @@ document.getElementById('add-todo').addEventListener('submit', async (event) => 
 })
 
 document.getElementById('todo-items').addEventListener('click', async (event) => {
+    const item = event.target.parentNode
+    console.log("clicked")
+    
+    
     if (event.target.type === 'checkbox') {
-        const item = event.target.parentNode
+        
         const id = item.dataset.id
 
         console.log(id)
@@ -104,8 +113,19 @@ document.getElementById('todo-items').addEventListener('click', async (event) =>
             console.error(error)
         } finally {
             await fetchTodos()
-        }
+        } 
+    } else if(event.target.type === 'button') {
+        const titleInput = document.getElementById('todo-title-input')
+        const detailsInput = document.getElementById('todo-details-input')
+
+        const title = item.querySelector('.todo-title')
+        titleInput.value = title.innerHTML
+
+        const details = item.querySelector('.todo-details')
+        detailsInput.value = details.innerHTML
+
     }
+    
 })
 
 
