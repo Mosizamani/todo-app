@@ -7,10 +7,17 @@ require('dotenv').config();
 const ToDo  = require('./models');
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 4000
+
+const authRouter = require('./routers/authRouter')
+const todoRouter = require('./routers/todoRouter')
 
 app.use(cors())
 app.use (express.json())
+
+app.use('/app', express.static('public'))
+app.use('/auth', authRouter)
+app.use('/', todoRouter)
 
 app.get('/todos', async (req, res) => {
     const todos = await ToDo.find()
