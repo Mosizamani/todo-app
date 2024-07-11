@@ -5,6 +5,11 @@ const errorElement = document.getElementById('error')
 async function fetchTodos() {
     try {
         const response = await fetch(`${API_URL}/todos`)
+
+        if (response.redirected) {
+            window.location.href = response.url
+        }
+        
         const data = await response.json()
         const todoItems = document.getElementById('todo-items')
 
@@ -68,6 +73,10 @@ document.getElementById('add-todo').addEventListener('submit', async (event) => 
             })
         })
 
+        if (response.redirected) {
+            window.location.href = response.url
+        }
+
         const data = await response.json()
 
         console.log(data)
@@ -98,7 +107,7 @@ document.getElementById('todo-items').addEventListener('click', async (event) =>
 
         console.log(id)
         try {
-            await fetch(`${API_URL}/todos/${id}`, {
+            const response = await fetch(`${API_URL}/todos/${id}`, {
                 method: 'PATCH', 
                 headers: {
                     'Content-Type': 'application/json'
@@ -108,6 +117,9 @@ document.getElementById('todo-items').addEventListener('click', async (event) =>
                 })
             })
 
+            if (response.redirected) {
+                window.location.href = response.url
+            }
 
         } catch (error) {
             console.error(error)

@@ -6,7 +6,9 @@ const router = express.Router()
 
 
 router.get('/todos', async (req, res) => {
-    const todos = await ToDo.find();
+    const todos = await ToDo.find({
+        user: req.user.id
+    });
     return res.status(200).json(todos)
 })
 
@@ -21,6 +23,7 @@ router.put('/todos', async (req, res) => {
     const todo = await ToDo.create({
         title: req.body.title,
         details: req.body.details,
+        user: req.user.id
     })
 
     return res.status(201).json(todo)
@@ -33,7 +36,8 @@ router.patch('/todos/:id', async (req, res) => {
 
     try {
         await ToDo.updateOne({
-            _id: req.params.id
+            _id: req.params.id,
+            user: req.user.id
         }, {
             title: req.body.title,
             details: req.body.details,

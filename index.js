@@ -1,10 +1,21 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session')
+const passport = require('passport') 
+
 require('dotenv').config();
 
 const app = express()
 const port = process.env.PORT || 4000
+
+const loggedIn = (req, res, next) => {
+    if (req.user) {
+        next()
+    } else {
+        res.redirect('/app/login.html')
+    }
+}
 
 const authRouter = require('./routers/authRouter')
 const todoRouter = require('./routers/todoRouter')
@@ -12,13 +23,30 @@ const todoRouter = require('./routers/todoRouter')
 app.use(cors())
 app.use (express.json())
 
+app.use(session({
+    secret: 'infbflkumjnyhbtgrvfedhjbjgk',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24
+    }
+  }))
+
+app.use(passport.session());
+
 app.use('/app', express.static('public'))
 app.use('/auth', authRouter)
-app.use('/', todoRouter)
+app.use('/', loggedIn, todoRouter)
+
+app.use((err, req, res, next) => {
+    console.error(err)
+    res.status(err.status ?? 500).send(err)
+})
 
 const start = async () => {
     try {
-        await mongoose.connect('mongodb://localhost:27017/test')
+        await mongoose.connect('mongodb://localhost:27017/todo')
 
         app.listen(port, () => {
             console.log(`Todo backend is listening on port ${port}`)
