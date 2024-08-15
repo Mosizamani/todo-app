@@ -143,3 +143,32 @@ document.getElementById('todo-items').addEventListener('click', async (event) =>
 
 // TODO: Implement editing title and details
 // TODO: Implement deleting todos
+
+
+// Theme code FOR DAY AND NIGHT MODE
+const themeLink = document.getElementById('theme-link');
+const themeToggle = document.getElementById('theme-toggle');
+
+// Check local storage to see if a theme is already set
+let currentTheme = localStorage.getItem('theme') || 'day';
+
+// Set the initial theme
+setTheme(currentTheme);
+
+themeToggle.addEventListener('click', () => {
+    // Toggle theme between 'day' and 'night'
+    currentTheme = currentTheme === 'day' ? 'night' : 'day';
+    setTheme(currentTheme);
+});
+
+function setTheme(theme) {
+    if (theme === 'night') {
+        themeLink.href = 'night.css';
+        themeToggle.textContent = 'Switch to Day Mode';
+    } else {
+        themeLink.href = 'day.css';
+        themeToggle.textContent = 'Switch to Night Mode';
+    }
+    // Save the theme preference in local storage
+    localStorage.setItem('theme', theme);
+}
