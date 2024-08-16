@@ -8,7 +8,7 @@ const router = express.Router()
 router.get('/todos', async (req, res) => {
     const todos = await ToDo.find({
         user: req.user.id
-    });
+    })
     return res.status(200).json(todos)
 })
 

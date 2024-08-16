@@ -34,6 +34,48 @@ body {
     background-color: #666;
 }
 
+#username-display,
+#time,
+#date {
+    display: flex;
+}
+
+#theme-toggle {
+    position: absolute;
+    top: 5px;
+    right: 70px;
+    background-color: darkorange;
+    color: white;
+    border: none;
+    padding: 10px;
+
+}
+#theme-toggle:hover{
+    color: white;
+    background-color: rgb(182, 100, 0);
+    border: none;
+    padding: 10px;
+    border-radius: 10%;
+}
+
+#logout {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: darkorange;
+    color: white;
+    border: none;
+    padding: 10px;
+}
+
+#logout:hover{
+    color: white;
+    background-color: rgb(182, 100, 0);
+    border: none;
+    padding: 10px;
+    border-radius: 10%;
+}
+
 textarea {
     width: 100%;
     height: 50px;
@@ -48,6 +90,15 @@ button {
     background-color: darkorange;
     border: none;
     padding: 10px;
+    border-radius: 10%;
+}
+
+button:hover {
+    color: white;
+    background-color: rgb(182, 100, 0);
+    border: none;
+    padding: 10px;
+    border-radius: 10%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -61,7 +112,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #error {
-    color: red;
+    color: rgb(247, 0, 0);
 }
 
 .container {
@@ -101,5 +152,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #add-todo button {
-    background-color: rgb(99, 86, 0);
+    background-color: darkorange;
+}
+
+#add-todo button:hover {
+    background-color: rgb(182, 100, 0);
 }
