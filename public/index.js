@@ -54,6 +54,8 @@ async function fetchTodos() {
                 button.type = 'button'
                 item.appendChild(button)
 
+                // TODO: Create a button for deleting the to-do item
+
                 // Append the item to the to-do items container
                 todoItems.appendChild(item)
             })
@@ -211,7 +213,7 @@ function setTheme(theme) {
     localStorage.setItem('theme', theme);
 }
 
-// **Manage logout button here (because the logout button is located in the index.html file)
+// **Managed logout button here (because the logout button is located in the index.html file)
 
 // Add an event listener for the logout button
 document.getElementById('logout').addEventListener('click', async () => {
@@ -227,20 +229,21 @@ document.getElementById('logout').addEventListener('click', async () => {
     
 })
 
-async function fetchUsernameAndUpdateDisplay() {
+// Fetching username from the server and displaying it on the page after the user successfully logs in
+
+document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('/todos'); // or another endpoint that returns the username
-        const data = await response.json();
+        const response = await fetch('/user-info')  // Fetch the username from your new route
+        const data = await response.json();  // Parse the JSON response
 
         if (response.ok) {
-            // Find the username display element and update its content
-            const usernameDisplay = document.getElementById('username-display');
-            usernameDisplay.textContent = `Welcome, ${data.username}!`;
+            // Update the username display element with the fetched username
+            const usernameDisplay = document.getElementById('username-display')
+            usernameDisplay.textContent = `Welcome, ${data.username}!`
         } else {
-            console.error('Failed to load user data');
+            console.error('Failed to load user data')
         }
     } catch (error) {
-        console.error('Error fetching username:', error);
+        console.error('Error fetching username:', error)
     }
-}
-
+})
