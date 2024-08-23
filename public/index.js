@@ -1,145 +1,156 @@
 // Base URL of the REST API for managing to-do items
-const API_URL = 'http://localhost:4000'
+const API_URL = 'http://localhost:4000';
 
 // Element to display error messages to the user
-const errorElement = document.getElementById('error')
+const errorElement = document.getElementById('error');
+
+// Variables to manage edit state
+let editMode = false;  // Track if we're editing an existing to-do 
+let currentEditId = null;  // Store the ID of the to-do being edited 
 
 // Function to fetch and display to-do items from the server
 async function fetchTodos() {
     try {
         // Send a GET request to fetch all to-do items
-        const response = await fetch(`${API_URL}/todos`)
+        const response = await fetch(`${API_URL}/todos`);
 
         // If the response is redirected, navigate to the new URL
         if (response.redirected) {
-            window.location.href = response.url
+            window.location.href = response.url;
         }
         
         // Parse the JSON response
-        const data = await response.json()
+        const data = await response.json();
         
         // Get the element to display the to-do items
-        const todoItems = document.getElementById('todo-items')
+        const todoItems = document.getElementById('todo-items');
 
         // Clear the current list of to-do items
-        todoItems.innerHTML = ''
+        todoItems.innerHTML = '';
 
         // If there are to-do items, render them on the page
         if (data.length) {
             data.forEach((todo) => {
                 // Create a div element for each to-do item
-                const item = document.createElement('div')
-                item.dataset.id = todo._id // Store the item ID in a data attribute
-                item.classList.add('todo-item')
+                const item = document.createElement('div');
+                item.dataset.id = todo._id; // Store the item ID in a data attribute
+                item.classList.add('todo-item');
                 
                 // Add 'completed' class if the to-do item is marked as completed
                 if (todo.completed) {
-                    item.classList.add('completed')
+                    item.classList.add('completed');
                 }
 
                 // Create a checkbox to mark the item as completed
-                const checkbox = document.createElement('input')
-                checkbox.type = 'checkbox'
-                checkbox.checked = todo.completed
-                item.appendChild(checkbox)
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = todo.completed;
+                item.appendChild(checkbox);
 
                 // Create a paragraph element to display the title and details of the to-do item
-                const text = document.createElement('p')
-                text.innerHTML = `<span class="todo-title">${todo.title}</span> - <span class="todo-details">${todo.details}</span>`
-                item.appendChild(text)
+                const text = document.createElement('p');
+                text.innerHTML = `<span class="todo-title">${todo.title}</span> - <span class="todo-details">${todo.details}</span>`;
+                item.appendChild(text);
 
                 // Create a button for editing the to-do item
-                const button = document.createElement('button')
-                button.innerHTML = 'edit'
-                button.type = 'button'
-                item.appendChild(button)
+                const button = document.createElement('button');
+                button.innerHTML = 'edit';
+                button.classList.add('edit-button'); // Use a class to identify the edit button 
+                item.appendChild(button);
 
-                // TODO: Create a button for deleting the to-do item
+                // Create a button for deleting the to-do item
+                const buttonD = document.createElement('button'); 
+                buttonD.innerHTML = 'delete';
+                buttonD.classList.add('delete-button'); // Use a class to identify the delete button 
+                item.appendChild(buttonD);                
 
                 // Append the item to the to-do items container
-                todoItems.appendChild(item)
-            })
+                todoItems.appendChild(item);
+            });
         } else {
             // If no to-do items are found, display a message
-            todoItems.innerHTML = '<p>No todo items found!</p>'
+            todoItems.innerHTML = '<p>No todo items found!</p>';
         }
 
     } catch (error) {
         // Log any errors to the console
-        console.error(error)
+        console.error(error);
     }
 }
 
 // Event listener to fetch and display to-do items when the DOM is fully loaded
 addEventListener("DOMContentLoaded", async () => {
-    await fetchTodos()
-})
+    await fetchTodos();
+});
 
 // Event listener for submitting the form to add a new to-do item
 document.getElementById('add-todo').addEventListener('submit', async (event) => {
-    // Prevent the default form submission behavior
-    event.preventDefault()
+    event.preventDefault();  // Prevent the default form submission behavior
 
-    // Get the input values for title and details
-    const title = document.getElementById('todo-title-input')
-    const details = document.getElementById('todo-details-input')
+    const title = document.getElementById('todo-title-input');
+    const details = document.getElementById('todo-details-input');
 
     try {
-        // Send a PUT request to add a new to-do item
-        const response = await fetch(`${API_URL}/todos`, {
-            method: 'PUT', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                title: title.value,
-                details: details.value
-            })
-        })
+        let response; 
+        if (editMode) { 
+            // If we're in edit mode, update the existing to-do 
+            response = await fetch(`${API_URL}/todos/${currentEditId}`, { 
+                method: 'PATCH', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    title: title.value,
+                    details: details.value
+                })
+            });
+        } else {
+            // If not in edit mode, create a new to-do
+            response = await fetch(`${API_URL}/todos`, {
+                method: 'PUT', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    title: title.value,
+                    details: details.value
+                })
+            });
+        }
 
-        // If the response is redirected, navigate to the new URL
         if (response.redirected) {
-            window.location.href = response.url
+            window.location.href = response.url;
         }
 
-        // Parse the JSON response
-        const data = await response.json()
+        const data = await response.json();
 
-        // Log the response data to the console
-        console.log(data)
-
-        // If the response status is not 201 (Created), throw an error
-        if (response.status !== 201) {
-            throw new Error(`Creating todo failed - ${data.message}`)
+        if (!response.ok) { 
+            throw new Error(`Failed to save todo - ${data.message}`); 
         }
 
-        // Clear the input fields
-        title.value = ''
-        details.value = ''
+        // Clear the input fields and reset edit mode 
+        title.value = '';
+        details.value = '';
+        editMode = false; 
+        currentEditId = null; 
 
     } catch (error) {
-        // Log any errors to the console and display the error message
-        console.error(error)
-        errorElement.innerHTML = error
+        console.error(error);
+        errorElement.innerHTML = error;
     } finally {
-        // Refresh the list of to-do items
-        await fetchTodos()
+        await fetchTodos();  // Refresh the list of to-do items
     }
-})
+});
 
 // Event listener for click events on the to-do items container
 document.getElementById('todo-items').addEventListener('click', async (event) => {
-    const item = event.target.parentNode // Get the parent element of the clicked target
-    console.log("clicked")
+    const item = event.target.parentNode;  // Get the parent element of the clicked target
     
-    // Check if the clicked element is a checkbox
     if (event.target.type === 'checkbox') {
+        // Handle checkbox click to mark as complete/incomplete
+        const id = item.dataset.id;
         
-        const id = item.dataset.id // Get the ID of the to-do item
-        console.log(id)
-
         try {
-            // Send a PATCH request to update the completed status of the to-do item
             const response = await fetch(`${API_URL}/todos/${id}`, {
                 method: 'PATCH', 
                 headers: {
@@ -148,42 +159,50 @@ document.getElementById('todo-items').addEventListener('click', async (event) =>
                 body: JSON.stringify({ 
                     completed: event.target.checked
                 })
-            })
+            });
 
-            // If the response is redirected, navigate to the new URL
             if (response.redirected) {
-                window.location.href = response.url
+                window.location.href = response.url;
             }
 
         } catch (error) {
-            // Log any errors to the console
-            console.error(error)
+            console.error(error);
         } finally {
-            // Refresh the list of to-do items
-            await fetchTodos()
-        } 
-    } else if(event.target.type === 'button') {
-        // Check if the clicked element is the edit button
-        const titleInput = document.getElementById('todo-title-input')
-        const detailsInput = document.getElementById('todo-details-input')
+            await fetchTodos();
+        }
+    } else if(event.target.classList.contains('edit-button')) { 
+        // Enter edit mode 
+        editMode = true; 
+        currentEditId = item.dataset.id; 
 
-        // Populate the form with the existing to-do item's title and details
-        const title = item.querySelector('.todo-title')
-        titleInput.value = title.innerHTML
+        const titleInput = document.getElementById('todo-title-input');
+        const detailsInput = document.getElementById('todo-details-input');
 
-        const details = item.querySelector('.todo-details')
-        detailsInput.value = details.innerHTML
+        const title = item.querySelector('.todo-title');
+        titleInput.value = title.innerHTML;
 
+        const details = item.querySelector('.todo-details');
+        detailsInput.value = details.innerHTML;
+    } else if(event.target.classList.contains('delete-button')) {
+        // Handle delete button click
+        const id = item.dataset.id;
+
+        try {
+            const response = await fetch(`${API_URL}/todos/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            await fetchTodos();
+        }
     }
-    
-})
-
-
-
-// TODO: Implement editing title and details
-
-// TODO: Implement deleting todos
-
+});
 
 // Theme code FOR DAY AND NIGHT MODE
 const themeLink = document.getElementById('theme-link');

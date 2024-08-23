@@ -27,22 +27,22 @@ router.get('/user-info', async (req, res) => {
     }
 })
 
-// router.delete('/todos/:id', async (req, res) => {
-//     if (!req.params.id) {
-//         return res.status(400).json({ message:'ID is required to delete a todo' })
-//     }
+router.delete('/todos/:id', async (req, res) => {
+    if (!req.params.id) {
+        return res.status(400).json({ message:'ID is required to delete a todo' })
+    }
 
-//     try {
-//         await ToDo.deleteOne({
-//             _id: req.params.id,
-//             user: req.user.id
-//         })
+    try {
+        await ToDo.deleteOne({
+            _id: req.params.id,
+            user: req.user.id
+        })
 
-//         return res.status(200).json({ message:'Todo deleted successfully' })
-//     } catch (error) {
-//         return res.status(400).json({ message:'Delete todo failed (The length of the id written is not correct)' })
-//     }
-// })
+        return res.status(200).json({ message:'Todo deleted successfully' })
+    } catch (error) {
+        return res.status(400).json({ message:'Delete todo failed (The length of the id written is not correct)' })
+    }
+})
 
 router.put('/todos', async (req, res) => {
     if(!req.body.title) {

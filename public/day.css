@@ -5,7 +5,12 @@ body {
     padding: 0;
 }
 
-/* styles.css */
+#register {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 20px;
+}
 
 .menu ul {
     list-style-type: none;
@@ -62,6 +67,22 @@ button:hover{
     border-radius: 10%;
 }
 
+buttonD {
+    color: white;
+    background-color: rgb(99, 86, 0);
+    border: none;
+    padding: 10px;
+    border-radius: 10%;
+
+}
+buttonD:hover{
+    color: white;
+    background-color: rgb(199, 173, 1);
+    border: none;
+    padding: 10px;
+    border-radius: 10%;
+}
+
 #theme-toggle {
     position: absolute;
     top: 5px;
@@ -101,6 +122,8 @@ button:hover{
 h1, h2, h3, h4, h5, h6 {
     color: rgb(99, 86, 0);
     font-weight: bold;
+    display: flex;
+    justify-content: center;
 }
 
 

@@ -101,6 +101,22 @@ button:hover {
     border-radius: 10%;
 }
 
+buttonD {
+    color: white;
+    background-color: darkorange;
+    border: none;
+    padding: 10px;
+    border-radius: 10%;
+}
+
+buttonD:hover {
+    color: white;
+    background-color: rgb(182, 100, 0);
+    border: none;
+    padding: 10px;
+    border-radius: 10%;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: darkorange;
     font-weight: bold;
