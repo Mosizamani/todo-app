@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
@@ -180,4 +180,180 @@ h1, h2, h3, h4, h5, h6 {
 #add-todo button:hover {
     background-color: rgb(99, 86, 0);
     border-radius: 10%;
+} */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fafafa; /* Light background similar to Google Keep */
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation and Menu Styling */
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    background-color: #ffffff; /* White background for a cleaner look */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-bottom: 1px solid #e0e0e0; /* Light border for separation */
+}
+
+.menu li {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333; /* Darker text color for better contrast */
+    padding: 10px 20px;
+    display: block;
+}
+
+.menu a:hover {
+    background-color: #f0f0f0; /* Slight background change on hover */
+}
+
+/* Username and Date Display */
+#username-display,
+#current-date-time {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: #333;
+}
+
+/* Textarea and Input */
+textarea,
+#add-todo input {
+    width: 100%;
+    padding: 10px;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inset shadow */
+    transition: border-color 0.3s ease; /* Smooth transition */
+}
+
+textarea:focus,
+#add-todo input:focus {
+    border-color: #6200ee; /* Focus color similar to Google Keep's accent color */
+}
+
+/* Buttons */
+button {
+    color: white;
+    background-color: #6200ee; /* Primary color for buttons */
+    border: none;
+    padding: 10px;
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+button:hover {
+    background-color: #3700b3; /* Darker shade on hover */
+}
+
+/* Grid Container for Todo Items */
+#todo-items {
+    display: grid; /* Grid layout for responsive design */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
+    gap: 16px; /* Space between grid items */
+    padding: 20px;
+    margin: 0 auto; /* Center the grid container */
+    max-width: 1200px; /* Max width for larger screens */
+}
+
+/* Todo Item Styling - Similar to Google Keep Cards */
+.todo-item {
+    background-color: #fff; /* White background for each card */
+    padding: 15px;
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    transition: box-shadow 0.3s ease; /* Smooth transition on hover */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: space-between; /* Ensure content spacing */
+    cursor: pointer; /* Indicate that item is clickable */
+}
+
+.todo-item:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
+}
+
+/* Title Styling (Top) */
+.todo-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333; /* Dark text for better readability */
+}
+
+/* Details Styling (Below Title) */
+.todo-details {
+    color: #555; /* Slightly lighter text for details */
+    margin-top: 5px; /* Space between title and details */
+}
+
+/* Completed Style */
+.todo-item.completed .todo-title,
+.todo-item.completed .todo-details {
+    text-decoration: line-through; /* Line-through when the item is completed */
+    color: green; /* Change color to indicate completion */
+}
+
+/* Checkbox Styling */
+.todo-item input[type="checkbox"] {
+    margin-bottom: 10px;
+}
+
+/* Error Message Styling */
+#error {
+    color: darkred;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Form and Container Styling */
+.container {
+    max-width: 600px; /* Limit container width */
+    margin: 20px auto; /* Center the container */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#add-todo {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* Logout and Theme Toggle Buttons */
+#theme-toggle,
+#logout {
+    margin-left: 10px;
+}
+
+#theme-toggle,
+#logout {
+    position: relative;
+    margin-right: 10px;
+    background-color: #6200ee;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#theme-toggle:hover,
+#logout:hover {
+    background-color: #3700b3;
 }

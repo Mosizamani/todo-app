@@ -266,3 +266,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error fetching username:', error)
     }
 })
+
+// Function to update and display the current time and date
+function updateDateTime() {
+    const dateTimeElement = document.getElementById('current-date-time') // Get the element to display time and date
+    const now = new Date()  // Get the current date and time
+
+    // Format the date and time
+    const formattedDate = now.toLocaleDateString('en-US', {
+        weekday: 'long', // Full name of the day
+        year: 'numeric', // 4-digit year
+        month: 'long', // Full name of the month
+        day: 'numeric' // Numeric day of the month
+    })
+
+    const formattedTime = now.toLocaleTimeString('en-US', {
+        hour: '2-digit', // 2-digit hour
+        minute: '2-digit', // 2-digit minute
+        second: '2-digit' // 2-digit second
+    })
+
+    // Display the formatted date and time in the HTML element
+    dateTimeElement.innerHTML = `${formattedDate}, ${formattedTime}`
+}
+
+// Update the time and date every second
+setInterval(updateDateTime, 1000)
+
+// Call the function to display the date and time immediately when the page loads
+updateDateTime()
