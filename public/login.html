@@ -8,13 +8,13 @@
   </head>
   <body>
     <div class="container">
-        <h1>Todo List</h1>
+        <h1>Todo Application</h1>
         <div id="register">
           <h3>Sign up!</h3>
           <form id="register-form">
             <input id="register-username" placeholder="Username" type="text" required="required"/>
             <input id="register-password" placeholder="password" type="Password" required="required"/>
-            <input type="submit" value="Register"/>
+            <button type="submit" value="Register">Register</button>
           </form>
           <h3>Or</h3>
           <button id="google-signup">Continue with Google</button>
@@ -22,12 +22,13 @@
           <button id="facebook-signup">Continue with Facebook</button>          
         </div>
         <div id="login">
-          <h3>Already have an acount?</h3>
+          <h3>Already have an account?</h3>
           <form id="login-form">
             <input id="login-username" placeholder="Username" type="text" required="required"/>
             <input id="login-password" placeholder="password" type="Password" required="required"/>
-            <input type="submit" value="Login"/>
+            <button type="submit" value="Login">Login</button>
           </form>
+          <a href="/app/resetPassword.html">Forgot your password?</a>
         </div>
         <div id="error">
           <!-- Will be populated with errors -->

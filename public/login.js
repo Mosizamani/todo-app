@@ -77,3 +77,37 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
         document.getElementById('error').appendChild(error)
     }
 })
+
+// // Add an event listener for the form submission of the forgot password form
+// document.getElementById('reset-password-form').addEventListener('submit', async (event) => {
+//     // Prevent the default form submission behavior
+//     event.preventDefault();
+
+//     // Get the email from the input field
+//     const email = document.getElementById('email').value;
+
+//     // Send a POST request to the API to reset the user's password
+//     const response = await fetch(`${API_URL}/auth/forgotPassword`, {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ email }) // Send the email in the request body
+//     });
+
+//     // If the response indicates a redirect, navigate to the redirected URL
+//     if (response.redirected) {
+//         window.location.href = response.url;
+//     }
+
+//     // If the response status is 400 or higher, it indicates an error
+//     if (response.status >= 400) {
+//         // Get the error message from the response
+//         const data = await response.text();
+//         // Create a new paragraph element to display the error message
+//         const error = document.createElement('p');
+//         error.textContent = data;
+//         // Clear any previous error messages and display the new one
+//         document.getElementById('error').innerHTML = '';
+//         document.getElementById('error').appendChild(error);
+//     }
+// });
+

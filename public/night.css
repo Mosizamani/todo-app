@@ -250,6 +250,9 @@ button {
     border-radius: 8px; /* Rounded corners */
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth background transition */
+    box-sizing: border-box;
+    margin-top: 5px;
+    text-align: center;
 }
 
 button:hover {
@@ -277,6 +280,9 @@ button:hover {
     flex-direction: column; /* Stack children vertically */
     justify-content: space-between; /* Ensure content spacing */
     cursor: pointer; /* Indicate that item is clickable */
+    word-wrap: break-word; /* Break words if they are too long */
+    overflow-wrap: break-word; /* Break long words onto the next line */
+    max-width: 100%; /* Ensure max width of the item */
 }
 
 .todo-item:hover {
@@ -288,12 +294,20 @@ button:hover {
     font-weight: bold;
     margin-bottom: 5px;
     color: #ffffff; /* Light text for better readability */
+    word-wrap: break-word; /* Break words if they are too long */
+    overflow-wrap: break-word; /* Break long words onto the next line */
+    white-space: pre-wrap; /* Preserve whitespace and wrap text */
+    max-width: 100%; /* Ensure the content does not exceed the box width */
 }
 
 /* Details Styling (Below Title) */
 .todo-details {
     color: #cccccc; /* Slightly lighter text for details */
     margin-top: 5px; /* Space between title and details */
+    word-wrap: break-word; /* Break words if they are too long */
+    overflow-wrap: break-word; /* Break long words onto the next line */
+    white-space: pre-wrap; /* Preserve whitespace and wrap text */
+    max-width: 100%; /* Ensure the content does not exceed the box width */
 }
 
 /* Completed Style */
@@ -334,11 +348,6 @@ button:hover {
 /* Logout and Theme Toggle Buttons */
 #theme-toggle,
 #logout {
-    margin-left: 10px;
-}
-
-#theme-toggle,
-#logout {
     position: relative;
     margin-right: 10px;
     background-color: #fb9b00; /* Primary color for buttons in night mode */
@@ -353,3 +362,4 @@ button:hover {
 #logout:hover {
     background-color: #c07702; /* Darker shade on hover */
 }
+

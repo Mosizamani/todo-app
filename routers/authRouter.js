@@ -94,6 +94,7 @@ router.post('/register', async (req, res, next) => {
             //     res.redirect('/app')
             // })
             res.status(201).send()
+            return ('User created successfully')
         } catch (error) {
             return next(error)
         }
@@ -107,6 +108,11 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/app/login.html'  //... Redirects to the login page on failure
     
 }))
+
+// //... Handles the user reset password process
+// router.post('/forgotPassword', async (req, res, next) => {
+//     res.redirect('/app/resetPassword.html'); // Redirects to the reset password page
+// });
 
 //... Handles the user logout process
 router.post('/logout', async (req, res, next) => {

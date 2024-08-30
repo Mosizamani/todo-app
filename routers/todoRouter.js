@@ -29,7 +29,7 @@ router.get('/user-info', async (req, res) => {
 
 router.delete('/todos/:id', async (req, res) => {
     if (!req.params.id) {
-        return res.status(400).json({ message:'ID is required to delete a todo' })
+        return res.status(400).json({ message:'ID is required to delete a note' })
     }
 
     try {
@@ -55,7 +55,8 @@ router.put('/todos', async (req, res) => {
     const todo = await ToDo.create({
         title: req.body.title,
         details: req.body.details,
-        user: req.user.id
+        user: req.user.id,
+        createdDate: req.body.createdDate,
     })
 
     return res.status(201).json(todo)
@@ -73,7 +74,8 @@ router.patch('/todos/:id', async (req, res) => {
         }, {
             title: req.body.title,
             details: req.body.details,
-            completed:req.body.completed
+            completed:req.body.completed,
+            createdDate: req.body.createdDate,
         })
     
         const todo = await ToDo.findOne({ _id: req.params.id })
